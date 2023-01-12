@@ -1,42 +1,35 @@
 import { useState } from 'react';
+import useHttp from '../../hooks/useHttp';
 
 import Section from '../UI/Section';
 import TaskForm from './TaskForm';
 
 const NewTask = (props) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
+  
+  const {isLoading , error , sendRequest} = useHttp();
   const enterTaskHandler = async (taskText) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(
-        'https://react-http-6b4a6.firebaseio.com/tasks.json',
-        {
-          method: 'POST',
-          body: JSON.stringify({ text: taskText }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
 
-      if (!response.ok) {
-        throw new Error('Request failed!');
-      }
+    const requestConfig = {url:"https://react-backend-connection-default-rtdb.firebaseio.com/tasks.json",
+    method:'POST',
+    body:{text:taskText},//String json transformation done by the hook when sending the request
+    headers:{
+      'Content-Type': 'application/json',
+    },
+  }
 
-      const data = await response.json();
+  const applyData = (data)=>{
 
-      const generatedId = data.name; // firebase-specific => "name" contains generated id
+    const generatedId = data.name; // firebase-specific => "name" contains generated id
       const createdTask = { id: generatedId, text: taskText };
 
       props.onAddTask(createdTask);
-    } catch (err) {
-      setError(err.message || 'Something went wrong!');
-    }
-    setIsLoading(false);
+  }
+
+    sendRequest(requestConfig , applyData);
+    
   };
+
+  
 
   return (
     <Section>
