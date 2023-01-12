@@ -3,6 +3,8 @@ import './App.css';
 import useConsoleLogger from './hooks/useConsoleLogger';
 import { useEffect } from 'react';
 import useLocalStorage from './hooks/useLocalStorage';
+import ForwardCounter from './components/ForwardCounter/ForwardCounter';
+import BackwardCounter from './components/BackwardCounter/BackwardCounter';
 
 function App() {
   // const getSavedValue = ()=>{
@@ -36,7 +38,7 @@ function App() {
 
   // }, [input])
 
-  
+  console.log("Adding this console.log in here should not be reflected in the main branch");
   const [ input , setInput] = useLocalStorage('input','');
   useConsoleLogger(input);
 
@@ -48,6 +50,10 @@ function App() {
     <div className="App">
 
       <input value={input} className ='input' type="text" onChange={handleChange}/>
+
+      <ForwardCounter/>
+      <BackwardCounter/>
+      
 
     </div>
   );

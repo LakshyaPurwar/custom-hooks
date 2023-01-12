@@ -2,12 +2,19 @@
   margin:0;
   border:0;
 }
+.App{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 .input{
   border:1px solid black;
-  height:2rem;
-  width:10rem;
+  height:4rem;
+  width:20rem;
   font-family:Verdana, Geneva, Tahoma, sans-serif ;
-  font-size:1.5rem;
+  font-size:3rem;
   font-weight: 500;
   margin:5rem 5rem;
+  padding:2rem;
 }
